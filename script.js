@@ -1,36 +1,37 @@
 /**
- * Version 3 Requirements
- * It should store the todos array on an object
- * It should have a displayTodos method
- * It should have an addTodo method
- * It should have a changeTodo method
- * It should have a deleteTodo method
+ * Version 4 Requirements
+ * todoList.addTodo should add objects
+ * todoList.changeTodo should change the todoText property
+ * todoList.toggleCompleted should change the completed property
  **/
 
 var todoList = {
-    // It should store the todos array on an object
-    todos: ["item 1", "item 2", "item 3", "item 4"],
-
-    // It should have a displayTodos method
+    todos: [
+        { todoText: "item 1", completed: false },
+        { todoText: "item 2", completed: false },
+        { todoText: "item 3", completed: false }
+    ],
     displayTodos: function() {
         console.log("My todos:", this.todos);
     },
-
-    // It should have an addTodo method
-    addTodo: function(todo) {
-        this.todos.push(todo);
+    addTodo: function(todoText) {
+        this.todos.push({
+            todoText: todoText,
+            completed: false
+        });
         this.displayTodos();
     },
-
-    // It should have a changeTodo method
-    changeTodo: function(position, newItem) {
-        this.todos[position] = newItem;
+    changeTodo: function(position, todoText) {
+        this.todos[position].todoText = todoText;
         this.displayTodos();
     },
-
-    // It should have a deleteTodo method
     deleteTodos: function(position) {
         this.todos.splice(position, 1);
+        this.displayTodos();
+    },
+    toggleCompleted: function(position) {
+        var todo = this.todos[position];
+        todo.completed = !todo.completed;
         this.displayTodos();
     }
 }
