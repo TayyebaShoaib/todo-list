@@ -1,18 +1,35 @@
 /**
- * Version 4 Requirements
- * todoList.addTodo should add objects
- * todoList.changeTodo should change the todoText property
- * todoList.toggleCompleted should change the completed property
+ * Version 5 Requirements
+ * .displayTodos should show .todoText
+ * .displayTodos should tell you if .todos is empty
+ * displayTodos should show .completed
  **/
 
 var todoList = {
     todos: [
         { todoText: "item 1", completed: false },
         { todoText: "item 2", completed: false },
-        { todoText: "item 3", completed: false }
+        { todoText: "item 3", completed: true }
     ],
     displayTodos: function() {
-        console.log("My todos:", this.todos);
+        if (this.todos.length === 0) 
+        {
+            console.log("Your todo list is empty!");
+        }
+        else 
+        {
+            console.log("My todos:");
+            for (var i = 0; i < this.todos.length; i++) {
+                if (this.todos[i].completed === true)
+                {
+                    console.log("(x)", this.todos[i].todoText);
+                }
+                else 
+                {
+                    console.log("( )", this.todos[i].todoText);
+                }
+            }
+        }
     },
     addTodo: function(todoText) {
         this.todos.push({
