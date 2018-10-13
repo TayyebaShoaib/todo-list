@@ -1,8 +1,7 @@
 /**
- * Version 5 Requirements
- * .displayTodos should show .todoText
- * .displayTodos should tell you if .todos is empty
- * displayTodos should show .completed
+ * Version 6 Requirements
+ * .toggleAll: if everything is true make every thing false
+ * .toggleAll: otherwise make everything true
  **/
 
 var todoList = {
@@ -49,6 +48,29 @@ var todoList = {
     toggleCompleted: function(position) {
         var todo = this.todos[position];
         todo.completed = !todo.completed;
+        this.displayTodos();
+    },
+    toggleAll: function() {
+        let completedTodos = 0;
+        let totalTodos = this.todos.length;
+        for (var i = 0; i < this.todos.length; i++) 
+        {
+            if (this.todos[i].completed === true) completedTodos++;
+        }
+        if (completedTodos === totalTodos) 
+        {
+            for (var i = 0; i < this.todos.length; i++)
+            {
+                this.todos[i].completed = false;
+            }
+        }
+        else 
+        {
+            for (var i = 0; i < this.todos.length; i++) 
+            {
+                this.todos[i].completed = true;
+            }            
+        }
         this.displayTodos();
     }
 }
