@@ -1,9 +1,9 @@
 /**
- * Version 6 Requirements
- * .toggleAll: if everything is true make every thing false
- * .toggleAll: otherwise make everything true
- **/
-
+ * Version 7 Requirements
+ * There should be a "Display Todos" button and a "Toggle All" button in the app
+ * Clicking "Display todos" should run todoList.displayTodos
+ * Clicking "Toggle All" should run todoList.toggleAll
+**/
 var todoList = {
     todos: [
         { todoText: "item 1", completed: false },
@@ -74,3 +74,12 @@ var todoList = {
         this.displayTodos();
     }
 }
+var displayTodosButton = document.getElementById("displayTodosButton");
+var toggleAllButton = document.getElementById("toggleAllButton");
+
+displayTodosButton.addEventListener('click', function() {
+    todoList.displayTodos();
+});
+toggleAllButton.addEventListener('click', function() {
+    todoList.toggleAll();
+}); 
