@@ -1,8 +1,9 @@
 /**
- * Version 7 Requirements
- * There should be a "Display Todos" button and a "Toggle All" button in the app
- * Clicking "Display todos" should run todoList.displayTodos
- * Clicking "Toggle All" should run todoList.toggleAll
+ * Version 8 Requirements
+ * It should have working controls for .addTodo
+ * It should have working controls for .changeTodo
+ * It should have working controls for .deleteTodo
+ * It should have working controls for .toggleCompleted
 **/
 var todoList = {
     todos: [
@@ -41,7 +42,7 @@ var todoList = {
         this.todos[position].todoText = todoText;
         this.displayTodos();
     },
-    deleteTodos: function(position) {
+    deleteTodo: function(position) {
         this.todos.splice(position, 1);
         this.displayTodos();
     },
@@ -53,20 +54,20 @@ var todoList = {
     toggleAll: function() {
         let completedTodos = 0;
         let totalTodos = this.todos.length;
-        for (var i = 0; i < this.todos.length; i++) 
+        for (var i = 0; i < totalTodos; i++) 
         {
             if (this.todos[i].completed === true) completedTodos++;
         }
         if (completedTodos === totalTodos) 
         {
-            for (var i = 0; i < this.todos.length; i++)
+            for (var i = 0; i < totalTodos; i++)
             {
                 this.todos[i].completed = false;
             }
         }
         else 
         {
-            for (var i = 0; i < this.todos.length; i++) 
+            for (var i = 0; i < totalTodos; i++) 
             {
                 this.todos[i].completed = true;
             }            
@@ -74,12 +75,34 @@ var todoList = {
         this.displayTodos();
     }
 }
-var displayTodosButton = document.getElementById("displayTodosButton");
-var toggleAllButton = document.getElementById("toggleAllButton");
 
-displayTodosButton.addEventListener('click', function() {
-    todoList.displayTodos();
-});
-toggleAllButton.addEventListener('click', function() {
-    todoList.toggleAll();
-}); 
+var handlers = {
+    displayTodos: function () {
+        todoList.displayTodos();
+    },
+    addTodo: function () {
+        var addTodoTextInput = document.getElementById("addTodoTextInput");
+        todoList.addTodo(addTodoTextInput.value);
+        addTodoTextInput.value = "";
+    },
+    changeTodo: function () {
+        var changeTodoPositionInput = document.getElementById("changeTodoPositionInput");
+        var changeTodoTextInput = document.getElementById("changeTodoTextInput");
+        todoList.changeTodo(changeTodoPositionInput.valueAsNumber, changeTodoTextInput.value);
+        changeTodoPositionInput.value = "";
+        changeTodoTextInput.value = "";
+    },
+    deleteTodo: function() {
+        var deleteTodoPositionInput = document.getElementById("deleteTodoPositionInput");
+        todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
+        deleteTodoPositionInput.value = "";
+    },
+    toggleCompleted: function () {
+        var toggleCompletedPositionInput = document.getElementById("toggleCompletedPositionInput");
+        todoList.toggleCompleted(toggleCompletedPositionInput.valueAsNumber);
+        toggleCompletedPositionInput.value = "";
+    },
+    toggleAll: function () {
+        todoList.toggleAll();
+    }
+};
