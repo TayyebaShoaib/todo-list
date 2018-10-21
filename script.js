@@ -1,8 +1,10 @@
 /**
- * Version 8 Requirements
- * There should an li element for every todo
- * Each li element should contain todoText
- * Each li element should show .completed
+ * Version 10 Requirements
+ * There should a way to create delete buttons
+ * There should be a delete button for each todo
+ * Each li should have an id that has the todo position
+ * Delete button should have access to the todo is
+ * Clicking delete should update todoList.todos and the DOM
 **/
 var todoList = {
     todos: [
@@ -70,10 +72,8 @@ var handlers = {
         changeTodoTextInput.value = "";
         view.displayTodos();
     },
-    deleteTodo: function() {
-        var deleteTodoPositionInput = document.getElementById("deleteTodoPositionInput");
-        todoList.deleteTodo(deleteTodoPositionInput.valueAsNumber);
-        deleteTodoPositionInput.value = "";
+    deleteTodo: function(position) {
+        todoList.deleteTodo(position);
         view.displayTodos();
     },
     toggleCompleted: function () {
@@ -89,9 +89,9 @@ var handlers = {
 };
 
 var view = {
+    todosUl: document.querySelector("ul"),
     displayTodos: function () {        
-        var todosUl = document.querySelector("ul");
-        todosUl.innerHTML = "";
+        this.todosUl.innerHTML = "";
         for (var i = 0; i < todoList.todos.length; i++)
         {
             var todoLi = document.createElement("li");
@@ -106,9 +106,28 @@ var view = {
             {
                 todoTextWithCompletion = "( ) " + todo.todoText;
             }
-
+            todoLi.id = i;
             todoLi.textContent = todoTextWithCompletion;
-            todosUl.appendChild(todoLi);
+            todoLi.appendChild(this.createDeleteButton());
+            this.todosUl.appendChild(todoLi);
         }
+    },
+    createDeleteButton: function () {
+        var deleteButton = document.createElement("button");
+        deleteButton.textContent = "Delete";
+        deleteButton.className = "deleteButton";
+        return deleteButton;
+    },
+    setUpEventListeners: function () {
+        this.todosUl.addEventListener("click", function (event) {
+            if (event.target.className == "deleteButton")
+            {
+                todoLi = event.target.parentNode;
+                const index = Number(todoLi.id);
+                handlers.deleteTodo(index);
+            }
+        });
     }
 };
+view.displayTodos();
+view.setUpEventListeners();
